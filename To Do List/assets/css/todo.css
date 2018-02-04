@@ -1,0 +1,93 @@
+/*CSS for Todo List*/
+
+body{
+	font-family: 'Roboto', sans-serif;
+	background: #22c1c3;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #fdbb2d, #22c1c3);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #fdbb2d, #22c1c3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+#container{
+	border-radius: 25px;
+	margin: 100px auto;
+	width: 360px;
+	list-style-type: none;
+	background-color: #F7F7F7;
+	box-shadow: 0 0 3px rgba(0,0,0,.1);
+}
+
+h1 {
+	background-color: #2980b9;
+	color:	white;
+	margin:0;
+	padding: 10px 20px;
+	text-transform: uppercase;
+	font-weight: normal;
+	border-radius: 25px 25px 0px 0px;
+}
+
+#add {
+	width: 10%;
+	margin:1% 0;
+	float: right;
+	cursor:pointer;
+}
+
+#add:hover {
+	color: rgb(200,200,200);
+}
+
+
+input{
+	margin: 0;
+	border:0;
+	padding:13px;
+	width: 100%;
+	color: #2980b9;
+	font-size: 18px;
+	background-color: #F7F7F7;
+	box-sizing: border-box;
+	border-radius: 0px 0px 25px 25px;
+}
+
+input:focus{
+	outline: none;
+	background-color: #fff;
+	border: 3px solid #2980b9;
+}
+
+ul{
+	padding: 0;
+	margin:0;
+}
+
+li{
+	list-style-type: none;
+	cursor:pointer;
+	padding: 10px 20px;
+	background-color: #fff;
+	color: #666;
+}
+
+li:nth-child(2n){
+	background-color: #F7F7F7;
+}
+
+.cross {
+	color:grey;
+	text-decoration:line-through;
+}
+
+li span{
+	height: 40px;
+	padding:0;
+	margin-right: 20px;
+}
+
+.fa-minus-square{
+	color: #ffcccc;
+}
+
+.fa-minus-square:hover{
+	color: #ff0000;
+}
