@@ -1,0 +1,49 @@
+<%- include partials/header.ejs %>
+
+	<%      
+		var date =  new Date(post.date);
+		var year = String(date.getFullYear());
+		var month = String(date.getMonth()+1);
+		var day = String(date.getDate());
+		date = month+"/"+day+"/" +year;
+	%>
+
+	<div class="ui raised segment">
+		<div class="ui internally celled grid">
+		  <div class="row">
+		    <div class="three wide column">
+		      <img class="ui fluid rounded image" src="<%= post.image %>">
+		    </div>
+		    <div class="thirteen wide column">
+		    	<div class="row">
+		    		<h1><%= post.title %></h1>
+		    	</div>
+		    	<div class="row">
+		    		<h5><%= date %></h5>
+		    	</div>
+		    	<div class="row">
+		    		<div class="ui segment post-comment">
+						<p>
+				        	<%= post.body %>
+				        </p>
+					</div>
+		    	</div>
+		    	<div class="row buttons">
+	    		<span>
+	    			<a class="ui inverted violet button override" href="/blogs/<%= post._id %>/edit" style="float:left;">Edit</a>
+	    			<a class="ui inverted red button override" href="/blogs" style="float:left;">Back</a>
+	    			<form method="POST" action="/blogs/<%= post._id %>?_method=DELETE" style="float:left;">
+		    				<button class="ui icon button" style="border:0;margin-top:5px;padding:0px;background:none;float:left;">
+								<i class="trash alternate icon delete" ></i>
+							</button>
+	    			</form>
+	    		</span>
+	    	</div>
+		    </div>
+		  </div>
+		</div>
+	</div>
+
+
+
+<%- include partials/footer.ejs %>

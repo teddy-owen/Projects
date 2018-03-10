@@ -1,0 +1,32 @@
+<%- include partials/header.ejs %>
+
+<div class="ui inverted segment new-form">
+  <h1>Edit Post</h1>
+  <div class="ui inverted form">
+  	<form method="POST" action="/blogs/<%= post._id %>?_method=PUT">
+      <div class="field">
+        <label>Title</label>
+        <input type="text" name="Blog[title]" value="<%=post.title%>">
+      </div>
+      <div class="field">
+        <label>Image</label>
+	 	<div class="ui inverted labeled input">
+	 		<div class="ui label">
+	    		http://
+	 		</div>
+	    	<input type="text" name="Blog[image]" value="<%=post.image%>">
+		</div>
+      </div>
+      <div class="field">
+      	<label>Content</label>
+    	<textarea rows="2" name="Blog[body]"><%=post.body%></textarea>
+      </div>
+      <input class="ui inverted blue button" type="submit" value="Submit">
+      <span>
+        <a class="ui inverted red button" href="/blogs/<%= post._id %>">Back</a>
+      </span>
+    </form>
+  </div>
+</div>
+
+<%- include partials/footer.ejs %>

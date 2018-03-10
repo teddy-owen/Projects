@@ -1,0 +1,46 @@
+i.coffee {	
+
+	font-size: 2em;
+	width:50px;
+
+}
+
+h1	{
+	/*color: blue;*/
+}
+
+div.ui.inverted.segment.new-form {
+	max-width: 500px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 100px;
+}
+
+.ui.segment.post-comment{
+	margin-top: 10px;
+}
+
+.row.buttons {
+	margin-top: 10px;
+	
+}
+
+.ui.inverted.green.button.override {
+	font-size: 10px;
+}
+
+.ui.inverted.violet.button.override {
+	font-size: 10px;
+}
+
+.ui.inverted.red.button.override {
+	font-size: 10px;
+}
+
+.delete {
+	color: black;
+}
+
+.delete:hover {
+	color: red;
+}

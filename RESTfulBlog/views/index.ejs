@@ -1,0 +1,45 @@
+<%- include partials/header.ejs %>
+
+	<h1>Welcome to the blog!</h1>
+
+	<% blogs.forEach(function(blog){ %>
+		<%      
+			var date =  new Date(blog.date);
+			var year = String(date.getFullYear());
+			var month = String(date.getMonth()+1);
+			var day = String(date.getDate());
+			date = month+"/"+day+"/" +year;
+		%>
+		<div class="ui raised segment">
+			<div class="ui internally celled grid">
+			  <div class="row">
+			    <div class="three wide column">
+			      <img class="ui fluid rounded image" src="<%= blog.image %>">
+			    </div>
+			    <div class="thirteen wide column">
+			    	<div class="row">
+			    		<h1><%= blog.title %></h1>
+			    	</div>
+			    	<div class="row">
+			    		<h5><%= date %></h5>
+			    	</div>
+			    	<div class="row">
+			    		<div class="ui segment post-comment">
+							<p>
+					        	<% var body = (blog.body ? blog.body.substring(0,100) + "...":"") %>
+					        	<%- body %>
+					        </p>
+						</div>
+			    	</div>
+			    	<div class="row buttons">
+		    		<span>
+		    			<a class="ui inverted green button override" href="/blogs/<%= blog._id %>">Show More</a>
+		    		</span>
+		    	</div>
+			    </div>
+			  </div>
+			</div>
+		</div>
+	<% }); %>
+		
+<%- include partials/footer.ejs %>
