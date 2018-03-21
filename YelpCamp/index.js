@@ -3,130 +3,130 @@ var app = express();
 var bodyParser = require("body-parser");
 var port = 3000;
 var mongoose = require("mongoose");
+var Campground = require("./models/campground.js");
+var Comment = require("./models/comment.js");
+var pagenate = require("./lib/pagenate.js");
+const path = require('path');
+var methodOverride = require('method-override');
 
 
 //setup DB
 mongoose.connect('mongodb://localhost/yelp_camp');
 
-//initiate campground model
-var Schema = mongoose.Schema,
-    ObjectId = Schema.ObjectId;
- 
-var CampgroundSchema = new Schema({
-    author    : ObjectId,
-    name: { type: String, default: 'Campground' },
-    image:  String,
-  	date: { type: Date, default: Date.now },
-});
-
-var Campground = mongoose.model('Campground', CampgroundSchema);
-
-
-
-
-
-// Campground.create({
-// 	name:"Nob Hill",
-// 	image:"https://images.theoutbound.com/uploads/1438705339755/w7dsd27c7km/ca23b30ad605fba2b34434aa33ae3e2b?w=900&h=600&fit=crop"
-// 	},
-
-// 	function(err,doc){
-// 		if(err){
-// 			console.log(err);
-// 		}else{
-// 			console.log("New entry created...");
-// 			console.log(doc);
-// 		}
-// });
-
-
 //initiate bodyparser
 app.use(bodyParser.urlencoded({extended:true}));
 
+// override with POST having ?_method=DELETE
+app.use(methodOverride('_method'));
 
-// var campgrounds = [
-// 	{name:"Nob Hill",image:"https://images.theoutbound.com/uploads/1438705339755/w7dsd27c7km/ca23b30ad605fba2b34434aa33ae3e2b?w=900&h=600&fit=crop"},
-// 	{name:"Goshen Ocean",image:"https://images.theoutbound.com/uploads/1427753025567/d3gg1ns22x9io1or/c78b80dbd560122b50fa5caa61336e56?w=900&h=600&fit=crop"},
-// 	{name:"Pine Nob",image:"https://images.theoutbound.com/uploads/1437140402255/wumsmrfw78e/ca76c0961beec40ee34c0e8b7997e543?w=900&h=600&fit=crop"},
-// 	{name:"Pacific Heights",image:"http://www.campersview.com/assets/campers.jpg"},
-// ];
-
-
-
-// for (var i =  campgrounds.length - 1; i >= 0; i--) {
-//  	var initDB = new Campground(campgrounds[i]);
-//  	initDB.save(function (err, doc) {
-//     	if (err) {
-//     		return console.error(err);
-//     	} else{
-//     		console.log("New entry created...");
-// 			console.log(doc);
-//     	}
-//   	});
-//  }
-
-// Campground.find(function (err, docs) {
-// 	if (err) {
-// 		return console.error(err);
-// 	}else{
-// 		console.log("DB Below:");
-// 		console.log(docs);
-// 	}
-// });
-
+//serve public directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.get("/",function(req,res){
-	res.render("landingPage.ejs");
+	res.render("landingPage.ejs",{page:"landing"});
 });
 
+
+//INDEX
 app.get("/campgrounds",function(req,res){
-	// var db = [];
-	Campground.find(function (err, docs) {
-		if (err) {
-			return console.error(err);
-		}else{
-			// db = docs;
-			res.render("campgrounds.ejs",{campgrounds:docs});
-		}
+	
+	//Get n/page and page # request from query string
+	var n = Number(req.query.n) ? Number(req.query.n):10;
+	var page = Number(req.query.page) ? Number(req.query.page):1;
+	
+	//return campgrounds to pass to index.ejs
+	pagenate(Campground,n,page,function(campgrounds,pages){
+		res.render("index.ejs",{campgrounds:campgrounds,pages:pages,n:n,currPage:page,page:"index"});
 	});
 
-	// console.log(db);
-
-	
 });
 
+//NEW
+app.get("/campgrounds/new",function(req,res){
+	//send form
+	res.render("newCampground.ejs",{page:"new"});
+});
+
+//CREATE
 app.post("/campgrounds",function(req,res){
-	//get data from form and add to campgrounds array
-	// console.log(req);
+	//get data from form and add to database
 	var data = req.body;
-	// console.log(data);
-	// campgrounds.push({name:data.name,image:data.image});
-	var newCampground = new Campground({name:data.name,image:data.image});
+	var newCampground = new Campground({name:data.name,image:data.image,description:data.description});
  	newCampground.save(function (err, doc) {
 		if (err) {
 			return console.error(err);
 		} else{
-			console.log("New entry created...");
-			console.log(doc);
+			res.redirect("/campgrounds");
 		}
 	});
-
-	// res.redirect(req.body);
-	//redirect back to campgrounds page
-	// console.log(campgrounds);
-	res.redirect("/campgrounds");
-	// next();
-	// res.render("campgrounds.ejs",{campgrounds:campgrounds});
 });
 
-app.get("/campgrounds/new",function(req,res){
-	//send form
-	res.render("newCampground.ejs");
+//SHOW
+app.get("/campgrounds/:id",function(req,res){
+	var id = req.params.id;
+	Campground.find({_id:id}).populate("comments").exec(function (err, doc){
+		if (err) {
+			return console.error(err);
+		} else{
+			res.render("show.ejs",{aCampground:doc[0],page:"show"});
+		}
+	});
 });
 
+//EDIT
+app.get("/campgrounds/:id/edit",function(req,res){
+		//get ID
+		var id = req.params.id;
+		//Query DB for post
+		Campground.find({_id:id},function (err, doc){
+		if (err) {
+			return console.error(err);
+		} else{
+			//prefill new campground clone and render
+			res.render("editCampground.ejs",{aCampground:doc[0],page:"edit"});
+		}
+	});
+});
+
+//UPDATE
+app.put("/campgrounds/:id",function(req,res){
+	//get ID
+	var id = req.params.id;
+
+	//get data from form and add to database
+	var data = req.body;
+	
+	//Query DB to update
+	Campground.findById(id, function (err, campground) {
+	  if (err) return handleError(err);
+
+	  campground.name = data.name;
+	  campground.image = data.image;
+	  campground.description = data.description;
+
+	  campground.save(function (err, updatedCampground) {
+	    if (err) return handleError(err);
+	    res.redirect("/campgrounds/"+id);
+	  });
+	});
+});
+
+//DESTROY
+app.delete("/campgrounds/:id",function(req,res){
+	//get ID
+	var id = req.params.id;
+	
+	Campground.remove({ _id: id }, function (err) {
+	  if (err) return handleError(err);
+	  // removed!
+	  res.redirect("/campgrounds");
+	});
+});
+
+//Default
 app.get("*",function(req,res){
-	res.send("404: Not Found");
+	res.render("missing.ejs");
 });
 
 app.listen(port,function(){

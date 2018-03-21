@@ -1,0 +1,88 @@
+<%- include ./partials/header.ejs %>
+<!-- <div class="show-margin"></div> -->
+<div class="container wrapper show">
+		<div class="row show-margin"></div>
+		<div class="row">
+				<div class="card mb-3">
+				  <img class="card-img-top" src="<%=  aCampground.image %>" alt="Card image cap">
+				  <div class="card-body">
+				    <h5 class="card-title"><%=  aCampground.name %></h5>
+				    <p class="card-text"><%=  aCampground.description %></p>
+				    <a href="/campgrounds" role="button" class="btn btn-primary"> <i class="fas fa-long-arrow-alt-left"></i> </a>
+				    <a href="/campgrounds/<%=  aCampground._id %>/edit" role="button" class="btn btn-success"> <i class="fas fa-pencil-alt"></i> </a>
+				    <form style="display: inline;" method="POST" action="/campgrounds/<%=  aCampground._id %>?_method=DELETE">
+				    	<div style="display: inline;" class="form-group">
+				    		<button style="border:none;background:none;padding:0;" type="submit"><a href="#" role="button" class="btn btn-danger"> <i class="fas fa-trash-alt"></i> </a></button>
+				    	</div>
+					</form>
+				  </div>
+				</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-3"></div>
+			<div class="col-md-6">
+				<h2 class="comment-section">Comments</h2>
+			</div>
+			<div class="col-md-3"></div>
+
+		</div>
+	    
+
+		<!-- Comment Input -->
+
+	    <div class="row">
+
+	    	<div class="col-md-3"></div>
+		    <div class="col-md-6">
+		    						<div class="widget-area no-padding blank">
+										<div class="status-upload">
+											<form>
+												<textarea placeholder="Leave a comment!" ></textarea>
+												<ul>
+													<li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Audio"><i class="fas fa-comment"></i></a></li>
+												</ul>
+												<button type="submit" class="btn btn-success green"><i class="fa fa-share"></i> Share</button>
+											</form>
+										</div><!-- Status Upload  -->
+									</div><!-- Widget Area -->
+			</div>   
+	    	<div class="col-md-3"></div>
+	    </div>
+
+
+	    <!-- Comments -->
+
+	    <% aCampground.comments.forEach(function(comment){ 
+
+	    	var date =  new Date(comment.date);
+			var year = String(date.getFullYear());
+			var month = String(date.getMonth()+1);
+			var day = String(date.getDate());
+			date = month+"/"+day+"/" +year;
+
+	    	%>
+
+		    <div class="row">
+		    	<div class="col-md-3"></div>
+		    	<div class="col-md-6">
+		    	<div class="card comment">
+				  <div class="card-body">
+				    <h5 class="card-title"><%= comment.author %><img src="/images/camping-program-icon.png"></h5>
+				    <h6 class="card-subtitle mb-2 text-muted"><span><i class="far fa-clock"></i></span><%= date %></h6>
+				    <p class="card-text"><%= comment.text %></p>
+				  </div>
+				</div>
+				</div>
+				<div class="col-md-3"></div>
+	       	</div>
+
+	    <% }); %>
+
+
+
+		<div class="row show-margin"></div>
+	<div class="push"></div>
+</div>
+
+<%- include ./partials/footer.ejs %>
