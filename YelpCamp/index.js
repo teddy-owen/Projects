@@ -1,7 +1,7 @@
 var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
-var port = 3000;
+var port = process.env.PORT || 3000;
 var mongoose = require("mongoose");
 var Campground = require("./models/campground.js");
 var Comment = require("./models/comment.js");
