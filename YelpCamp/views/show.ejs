@@ -1,4 +1,14 @@
 <%- include ./partials/header.ejs %>
+
+<%
+var hide = "";
+if(!login || !edit){
+	hide = "hidden";
+}
+
+var poster = aCampground.author ? aCampground.author.username:"Anonymous";
+%>
+
 <!-- <div class="show-margin"></div> -->
 <div class="container wrapper show">
 		<div class="row show-margin"></div>
@@ -8,11 +18,13 @@
 				  <div class="card-body">
 				    <h5 class="card-title"><%=  aCampground.name %></h5>
 				    <p class="card-text"><%=  aCampground.description %></p>
+				    <h6 class="card-subtitle mb-2 text-muted"><em>Submitted by <%=  poster %></em></h6>
+				    <!-- <p class="card-title"></p> -->
 				    <a href="/campgrounds" role="button" class="btn btn-primary"> <i class="fas fa-long-arrow-alt-left"></i> </a>
-				    <a href="/campgrounds/<%=  aCampground._id %>/edit" role="button" class="btn btn-success"> <i class="fas fa-pencil-alt"></i> </a>
+				    <a href="/campgrounds/<%=  aCampground._id %>/edit" role="button" class="btn btn-success" <%= hide %>> <i class="fas fa-pencil-alt"></i> </a>
 				    <form style="display: inline;" method="POST" action="/campgrounds/<%=  aCampground._id %>?_method=DELETE">
 				    	<div style="display: inline;" class="form-group">
-				    		<button style="border:none;background:none;padding:0;" type="submit"><a href="#" role="button" class="btn btn-danger"> <i class="fas fa-trash-alt"></i> </a></button>
+				    		<button style="border:none;background:none;padding:0;" type="submit" <%= hide %>><a href="#" role="button" class="btn btn-danger"<%= hide %>> <i class="fas fa-trash-alt"></i> </a></button>
 				    	</div>
 					</form>
 				  </div>
@@ -37,12 +49,12 @@
 		    <div class="col-md-6">
 		    						<div class="widget-area no-padding blank">
 										<div class="status-upload">
-											<form>
-												<textarea placeholder="Leave a comment!" ></textarea>
+											<form id="comment" method="POST" action="/campgrounds/<%=  aCampground._id %>/comment">
+												<textarea placeholder="Leave a comment!" name="comment"></textarea>
 												<ul>
 													<li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Audio"><i class="fas fa-comment"></i></a></li>
 												</ul>
-												<button type="submit" class="btn btn-success green"><i class="fa fa-share"></i> Share</button>
+												<button type="submit" class="btn btn-success green" disabled><i class="fa fa-share"></i> Share</button>
 											</form>
 										</div><!-- Status Upload  -->
 									</div><!-- Widget Area -->
@@ -53,13 +65,31 @@
 
 	    <!-- Comments -->
 
-	    <% aCampground.comments.forEach(function(comment){ 
+
+
+	    <% 
+	    	var new_array = [];
+
+	    	for (var i = aCampground.comments.length - 1; i >= 0; i--) {
+	    		new_array.push(aCampground.comments[i]);
+	    	}
+
+	    	new_array.forEach(function(comment){ 
 
 	    	var date =  new Date(comment.date);
 			var year = String(date.getFullYear());
 			var month = String(date.getMonth()+1);
 			var day = String(date.getDate());
 			date = month+"/"+day+"/" +year;
+
+			var author = comment.user ? comment.user.username:comment.author;
+
+			var commentEdit = (comment.user && user) ? (String(user._id) === String(comment.user._id)):false;
+			
+			var hideComment = "";
+			if(!commentEdit){
+				hideComment = "hidden";
+			}
 
 	    	%>
 
@@ -68,7 +98,16 @@
 		    	<div class="col-md-6">
 		    	<div class="card comment">
 				  <div class="card-body">
-				    <h5 class="card-title"><%= comment.author %><img src="/images/camping-program-icon.png"></h5>
+				    <h5 class="card-title">
+					    <%= author %>	
+					    <img style="display: inline;float:right;" src="/images/camping-program-icon.png">			    
+					    <form style="display: inline;float:right;margin-right:10px;" method="POST" action="/campgrounds/<%=  aCampground._id %>/comment/<%=  comment._id %>?_method=DELETE">
+					    	<div style="display: inline;" class="form-group">
+					    		<button style="border:none;background:none;padding:0;" type="submit" <%= hideComment %>><a href="#" role="button" class="btn btn-danger"<%=hideComment %>> <i class="fas fa-trash-alt"></i> </a></button>
+					    	</div>
+						</form>
+						
+					</h5>
 				    <h6 class="card-subtitle mb-2 text-muted"><span><i class="far fa-clock"></i></span><%= date %></h6>
 				    <p class="card-text"><%= comment.text %></p>
 				  </div>
@@ -85,4 +124,9 @@
 	<div class="push"></div>
 </div>
 
+
+<script src="/scripts/show.js"></script>
+
+
 <%- include ./partials/footer.ejs %>
+

@@ -1,0 +1,132 @@
+body,html {
+	height:100%;
+	width:100%;
+
+}
+
+body {
+	background-color: rgba(0,0,0,1);
+}
+
+.name{
+	color: white;
+	/*font-family: 'Rammetto One', cursive;*/
+	font-family: 'Indie Flower', cursive;
+	font-size: 50px;
+
+}
+
+#myVideo {
+
+
+    z-index: -2;
+
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    top: 	0;
+    left: 	0;
+    min-width: 100%; 
+    min-height: 100%;
+}
+
+#filter {
+	background-color: rgba(0,0,0,.3);
+	position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%; 
+    min-height: 100%;
+    z-index: -1;
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        /*background-image: url("/images/fire.png");*/
+        /*width: 	100%;*/
+        background-color: 	rgba(130, 2, 99, 1);
+    }
+
+    #myVideo{
+    	visibility: hidden;
+    }
+
+    #background{
+    	visibility: visible;
+    	width: 50px;
+    }
+}
+
+
+#background{
+	visibility: hidden;
+	/*width: 50px;*/
+}
+
+body.landing div.modal div.row{
+		margin-top: 10px;
+}
+
+body.landing div.modal img{
+		width:100%;
+}
+body.landing div.modal-dialog {
+		max-width: 400px;
+}
+
+ul.nav {
+	margin-left:auto;
+	max-width: 1500px;
+	margin-top: 10px;
+	/*float:right;*/
+}
+
+ul.nav a{
+	color: white;
+	font-family: 'Nanum Gothic', sans-serif;
+}
+
+ul.nav a:hover{
+	background-color: purple;
+}
+
+div.container{
+	/*height: 100%;*/
+} 
+
+div.container.sub{
+	/*height: 100%;	*/
+	padding-top:15%;
+	max-width:800px;
+} 
+
+div.container.sub div.row {
+	margin-bottom: 	50px;
+}
+
+div.container.sub img{
+    width:50%;
+    margin-left: 25%;
+    margin-right: 25%;
+} 
+
+div.container.sub h1{
+	text-align: center;
+} 
+
+div.container.sub a{
+	width:50%;
+    margin-left: 25%;
+    margin-right: 25%;
+    font-family: 'Nanum Gothic', sans-serif;
+    opacity: 0.8;
+    /*font-size: 	1em;*/
+} 
+
+div.container.sub a:hover{
+	width:50%;
+    margin-left: 25%;
+    margin-right: 25%;
+    font-family: 'Nanum Gothic', sans-serif;
+    opacity: 1;
+} 

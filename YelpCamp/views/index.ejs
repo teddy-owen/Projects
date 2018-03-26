@@ -1,9 +1,11 @@
 <%- include ./partials/header.ejs %>
 
-
-
-
-
+<%
+var href = "href=/campgrounds/new";
+if(!login){
+	href = "";
+}
+%>
 
 
 <div class="container wrapper">
@@ -12,7 +14,7 @@
 			<h1 class="name">Welcome to YelpCamp</h1>
 			<p>View our hand-picked campgrounds from around the world</p>
 			<p>
-				<a role="button" class="btn btn-primary btn-lg" href="/campgrounds/new">Add a New Campground</a>
+				<a role="button" class="btn btn-primary btn-lg" <%= href %> id="newCampground">Add a New Campground</a>
 			</p>
 		</div>
 	</header>
@@ -52,5 +54,6 @@
 </div>
 
 
+<script src="/scripts/campgrounds.js"></script>
 
 <%- include ./partials/footer.ejs %>

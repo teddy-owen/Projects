@@ -1,0 +1,50 @@
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Login</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		    <form class="form-signin" method="POST" action="/login">
+		    	<div class="container">
+		    		<div class="row">
+				      <div class="col-4"></div>
+				      <div class="col-4">
+				      		<img src="\images\\camping-program-icon.png">
+				      </div>
+				      <div class="col-4"></div>
+				    </div>
+				    <div class="row">
+				    	<div class="col-1"></div>
+				    	<div class="col-10">
+				    		<label class="sr-only">Email address</label>
+				      		<input type="text" class="form-control" placeholder="Username" name="username" required autofocus>
+				    	</div>
+				    	<div class="col-1"></div>
+				    </div>
+				    <div class="row">
+				    	<div class="col-1"></div>
+				    	<div class="col-10">
+				      		<label for="inputPassword" class="sr-only">Password</label>
+				      		<input type="password" id="inputPassword" class="form-control pass" name="password" placeholder="Password" required>
+				    	</div>
+				    	<div class="col-1"></div>
+				    </div>
+
+				    <div class="row">
+				    	<div class="col-1"></div>
+				    	<div class="col-10">
+							<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+				    	</div>
+				    	<div class="col-1"></div>
+				    </div>
+		      	</div>
+		    </form>
+      </div>
+    </div>
+  </div>
+</div>

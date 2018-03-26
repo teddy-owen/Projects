@@ -51,10 +51,10 @@ body.index {
 
 @media only screen and (max-width: 800px) {
     body.index {
-    	background-image: none;
-        background: #7b4397; /* fallback for old browsers */
-  		background: -webkit-linear-gradient(to right, #7b4397, #dc2430); /* Chrome 10-25, Safari 5.1-6 */
-  		background: linear-gradient(to right, #7b4397, #dc2430); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	    background-image: none;
+		background: #000428;  /* fallback for old browsers */
+		background: -webkit-linear-gradient(to right, #004e92, #000428);  /* Chrome 10-25, Safari 5.1-6 */
+		background: linear-gradient(to right, #004e92, #000428); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     }
 }
 
@@ -559,4 +559,31 @@ h2.comment-section {
 	margin-top: 100px; 
 	color: white;
 	border-bottom: 2px solid white;
+}
+
+/*////////////////////////////////////////////////////////////////////////////*/
+/*Modal*/
+/*////////////////////////////////////////////////////////////////////////////*/
+
+div.modal-content {
+	width: 75%;
+	margin:auto;
+}
+
+div.modal-body {
+	padding-top: 0px;
+}
+
+div.modal-body img {
+	width: 100%;
+	/*margin:auto 0;*/
+}
+
+
+div.modal-body div.row {
+	margin: 10px auto;
+}
+
+div.modal-body input.pass {
+	letter-spacing: 1px;
 }

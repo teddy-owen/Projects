@@ -5,7 +5,10 @@ var Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
  
 var CampgroundSchema = new Schema({
-    author    : ObjectId,
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"User"
+        },
     name: { type: String, default: 'Campground' },
     image:  String,
   	date: { type: Date, default: Date.now },

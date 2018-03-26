@@ -9,7 +9,30 @@
 	<link href="https://fonts.googleapis.com/css?family=Indie+Flower|Rammetto+One|Nanum+Gothic:800" rel="stylesheet">
 	<link rel="icon" href="\images\\camping-program-icon.png">
 	<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
+	<!-- JQuery -->
+	<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
 </head>
+
+
+<%
+var login_signUp = "";
+var logout = "hidden";
+if(login){
+	login_signUp = "hidden";
+	logout = "";
+}else{
+	login_signUp = "";
+	logout = "hidden";
+}
+
+var username = user ? user.username:"None";
+
+%>
+
 <body class="<%= page %>">
 	<nav id="header" class="navbar sticky-top navbar-expand-lg navbar-light">
 	  
@@ -19,22 +42,47 @@
 	  </button>
 
 	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-	    <ul class="navbar-nav mr-auto">
+	    <ul class="navbar-nav mr-auto" style="margin-left:85%;">
 	      <li class="nav-item">
-	        <a class="nav-link" href="/">Login</a>
+	        <a style="color:white;" class="nav-link" href="/" role="button" data-toggle="modal" data-target="#loginModal" id="login" <%= login_signUp %>>Login</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="/">Sign Up</a>
+	        <a style="color:white;" class="nav-link" href="/" role="button" data-toggle="modal" data-target="#signupModal" <%= login_signUp %>>Sign Up</a>
 	      </li>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="/">Logout</a>
+	        <span style="color:black;" class="nav-link" <%= logout %>>Signed in as <%= username %></span>
+	      </li>
+	      <li class="nav-item">
+	        <a style="color:white;"  class="nav-link" href="/logout" <%= logout %>>Logout</a>
 	      </li>
 	    </ul>
-	    <form class="form-inline my-2 my-lg-0">
-	      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-	      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-	    </form>
 	  </div>
 	</nav>
 
+<div class="container">
+
+	<% if (error && error.length > 0){%>
+		<div class="row" style="margin-top:10px;">
+			<div class = "col-12">
+				<div class="alert alert-danger" role="alert">
+				  <%= error %>
+				</div>
+			</div>
+		</div>
+	<%}%>
+	<% if (success && success.length > 0){%>
+		<div class="row" style="margin-top:10px;">
+			<div class = "col-12">
+				<div class="alert alert-success" role="alert">
+				  <%= success %>
+				</div>
+			</div>
+		</div>
+	<%}%>
+</div>
+
+
+
+<%- include ./login.ejs %>
+<%- include ./signUp.ejs %>

@@ -1,13 +1,111 @@
-<%- include ./partials/header.ejs %>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Yelp Camp</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<!-- <link rel="stylesheet" type="text/css" href="/styles//app.css"> -->
+	<!-- <link rel="stylesheet" type="text/css" href="\styles\main.css"> -->
+	<link rel="stylesheet" type="text/css" href="\styles\landing.css">
+	<link href="https://fonts.googleapis.com/css?family=Indie+Flower|Rammetto+One|Nanum+Gothic:800" rel="stylesheet">
+	<link rel="icon" href="\images\\camping-program-icon.png">
+	<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
+	<!-- JQuery -->
+	<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+</head>
+<body class="landing">
+
+<%
+var login_signUp = "";
+var logout = "hidden";
+if(login){
+	login_signUp = "hidden";
+	logout = "";
+}else{
+	login_signUp = "";
+	logout = "hidden";
+}
+
+var username = user ? user.username:"None";
+
+%>
 
 
 
-<div class="wrapper">
-	<h1>Landing Page!</h1>
 
-	<p>Welcome to Yelp Camp</p>
 
-	<a href="/campgrounds">See Campgrounds!</a>
-	<div class="push"></div>
+<div class="container">
+
+<div id="filter"></div>
+<video autoplay muted poster="/images/fire.png" loop id="myVideo" >
+  <source src="/videos/video.mp4" type="video/mp4">
+</video>
+
+<!-- <img id="background" src="/images/fire.png" > -->
+
+<div class="row">	
+	<ul class="nav justify-content-end nav-pills" >
+      <li class="nav-item">
+        <a  class="nav-link" href="/" role="button" data-toggle="modal" data-target="#loginModal" id="login" <%= login_signUp %>>Login</a>
+      </li>
+      <li class="nav-item">
+        <a s class="nav-link" href="/" role="button" data-toggle="modal" data-target="#signupModal" <%= login_signUp %>>Sign Up</a>
+      </li>
+      </li>
+      <li class="nav-item">
+        <span  class="nav-link" <%= logout %>>Signed in as <%= username %></span>
+      </li>
+      <li class="nav-item">
+        <a  class="nav-link" href="/logout" <%= logout %>>Logout</a>
+      </li>
+    </ul>
+    <!-- <ul style="height:100px;"></ul> -->
 </div>
-<%- include ./partials/footer.ejs %>
+
+
+
+
+<%- include ./partials/login.ejs %>
+<%- include ./partials/signUp.ejs %>
+
+
+
+<!-- <h1> Landing Page </h1> -->
+
+	<div class="row">	
+		<div class="container sub">	
+				<div class="row">
+					<div class="col-3">	</div>	
+					<div class="col-6">	
+						<img src="\images\\camping-program-icon.png">
+					</div>
+					<div class="col-3">	</div>
+				</div>
+				<div class="row">
+					<div class="col-2">	</div>	
+					<div class="col-8">	
+						<h1 class="px-auto name"> Welcome to YelpCamp </h1>
+					</div>
+					<div class="col-2">	</div>
+				</div>
+				<div class="row">
+					<div class="col-2">	</div>	
+					<div class="col-8 col-xs-12">	
+						<a href="/campgrounds" role="button" class="btn btn-primary btn-lg">Campsites</a>
+					</div>
+					<div class="col-2">	</div>
+				</div>
+		</div>
+	</div>
+</div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
